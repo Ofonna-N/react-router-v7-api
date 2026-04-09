@@ -12,36 +12,22 @@ apps/
 
 ## Running locally
 
-You need two terminals.
-
-**Terminal 1 — API server**
+**Terminal 1 — API**
 ```bash
-cd apps/api
-pnpm install
-pnpm dev
-# Running at http://localhost:3000
-# Spec at  http://localhost:3000/openapi.json
+pnpm --filter @catalyst/api dev
 ```
 
 **Terminal 2 — Frontend**
 ```bash
-cd apps/web
-pnpm install
-pnpm dev
-# Running at http://localhost:5173
+pnpm --filter @catalyst/web dev
 ```
 
-## The generation pipeline (run after any backend API change)
+## Regenerate API hooks (after any backend change)
 
 ```bash
-# Step 1: regenerate openapi.json from the live Hono app
-cd apps/api
-pnpm generate:spec
-
-# Step 2: regenerate TanStack Query hooks from the new spec
-cd apps/web
-pnpm generate
+pnpm turbo run generate
 ```
+This runs `generate:spec` in the API first, then `generate` in the web automatically.
 
 See [HOW_IT_WORKS.md](./HOW_IT_WORKS.md) for a step-by-step explanation of the full pipeline.
 

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "build/**", ".react-router/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "typecheck": {
+      "dependsOn": ["generate"],
+      "outputs": []
+    },
+    "generate:spec": {
+      "outputs": ["openapi.json"]
+    },
+    "generate": {
+      "dependsOn": ["@catalyst/api#generate:spec"],
+      "inputs": ["../api/openapi.json", "orval.config.ts"],
+      "outputs": ["app/api/generated/**"]
+    }
+  }
+}
