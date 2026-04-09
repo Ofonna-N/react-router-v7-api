@@ -310,22 +310,71 @@ export default function ProjectsPage() {
 
 ---
 
-## The Manual Workflow (Current Setup)
+## Step 9 — Automate the Pipeline with Turborepo
 
-Because we haven't added Turborepo yet, regenerating hooks is a 2-step process
-you run manually whenever the backend API changes:
+The manual two-step workflow has one risk: if you change the backend and forget
+to regenerate, the frontend types silently go stale. Turborepo fixes this by
+making the generation order a declared dependency — `generate` in the web
+*cannot* run before `generate:spec` in the API.
+
+**File:** `turbo.json` (root)
+
+```json
+{
+  "tasks": {
+    "generate:spec": {
+      "outputs": ["openapi.json"]
+    },
+    "generate": {
+      "dependsOn": ["@catalyst/api#generate:spec"],
+      "inputs": ["../api/openapi.json", "orval.config.ts"],
+      "outputs": ["app/api/generated/**"]
+    }
+  }
+}
+```
+
+**What each field does:**
+
+| Field | Purpose |
+|---|---|
+| `dependsOn: ["@catalyst/api#generate:spec"]` | Turbo runs `generate:spec` in the API first, always |
+| `inputs` | Turbo's cache key — only re-runs `generate` if these files changed |
+| `outputs` | What gets cached — restored instantly on cache hit |
+
+**Run from the repo root:**
 
 ```bash
-# Step 1: from apps/api/ — regenerate the spec file
+pnpm turbo run generate
+```
+
+Turbo resolves the dependency graph, runs `generate:spec` in `apps/api/` first
+(writing `openapi.json`), then runs `generate` in `apps/web/` against the fresh
+spec. Both steps are cached — if nothing changed, both are skipped entirely.
+
+**Why `pnpm turbo run generate` and not `pnpm turbo generate`?**
+
+Turborepo has a built-in subcommand called `generate` (for scaffolding new
+packages). Running `pnpm turbo generate` triggers that instead of your task.
+Always use `pnpm turbo run <taskName>` to explicitly run a pipeline task.
+
+---
+
+## The Manual Workflow (without Turborepo)
+
+For reference, here is what the pipeline looks like without Turborepo — this
+is the friction that motivated adding it:
+
+```bash
+# Step 1: from apps/api/
 pnpm generate:spec
 
-# Step 2: from apps/web/ — regenerate the hooks from the new spec
+# Step 2: from apps/web/
 pnpm generate
 ```
 
-If you forget to run these after changing the backend, the frontend types will
-be stale — but TypeScript will not catch this automatically. This is the
-exact friction that Turborepo's pipeline will eventually automate.
+The problem: nothing enforces the order or reminds you to run both.
+If you skip step 1, Orval regenerates hooks from a stale spec with no warning.
 
 ---
 
