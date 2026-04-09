@@ -1,0 +1,5 @@
+# Build output
+dist/
+
+# pnpm
+node_modules/
