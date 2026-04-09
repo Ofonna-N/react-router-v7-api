@@ -6,6 +6,9 @@
 **/build/
 **/.react-router/
 
+# Turborepo cache
+**/.turbo/
+
 # Environment variables
 **/.env
 **/.env.local
