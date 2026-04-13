@@ -6,7 +6,7 @@ import { registerTaskRoutes } from "./handlers/tasks.handler.js";
 
 export const app = new OpenAPIHono();
 
-// CORS — allow the frontend (dev or production)
+// CORS, allow the frontend (dev or production)
 const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:5173";
 app.use(
   "*",

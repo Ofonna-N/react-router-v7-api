@@ -1,6 +1,6 @@
 # Catalyst
 
-A type-safe project management system built as an experiment in **zero-drift API development** — where a single Zod schema is the source of truth for runtime validation, OpenAPI documentation, and fully-typed React Query hooks.
+A type-safe project management system built as an experiment in **zero-drift API development**, where a single Zod schema is the source of truth for runtime validation, OpenAPI documentation, and fully-typed React Query hooks.
 
 ## The problem this solves
 
@@ -28,7 +28,7 @@ Change the schema, run one command, and the entire stack updates.
 | API framework | [Hono](https://hono.dev) + `@hono/zod-openapi` | Routes, validation, OpenAPI spec generation |
 | Schema / types | [Zod](https://zod.dev) | Single source of truth for shapes and TypeScript types |
 | Code generation | [Orval](https://orval.dev) | Reads OpenAPI spec, writes TanStack Query hooks |
-| Frontend routing | [React Router v7](https://reactrouter.com) | SPA mode — loaders only for URL params, no SSR |
+| Frontend routing | [React Router v7](https://reactrouter.com) | SPA mode, loaders only for URL params, no SSR |
 | Server state | [TanStack Query](https://tanstack.com/query) | All data fetching; loaders never touch the network |
 | Monorepo | pnpm workspaces + [Turborepo](https://turbo.build) | Enforces `generate:spec → generate` pipeline order |
 
@@ -136,6 +136,6 @@ pnpm --filter @catalyst/web dev
 pnpm turbo run generate
 ```
 
-Turborepo runs `generate:spec` (dumps `openapi.json`) in the API first, then `generate` (runs Orval) in the web. The order is enforced by the `dependsOn` declaration in `turbo.json` — it cannot run out of sequence.
+Turborepo runs `generate:spec` (dumps `openapi.json`) in the API first, then `generate` (runs Orval) in the web. The order is enforced by the `dependsOn` declaration in `turbo.json`, it cannot run out of sequence.
 
 For a detailed walkthrough of the full pipeline, see [HOW_IT_WORKS.md](./HOW_IT_WORKS.md).

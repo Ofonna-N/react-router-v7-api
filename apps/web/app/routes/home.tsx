@@ -59,7 +59,7 @@ export default function Home() {
         </h1>
         <p className="text-lg text-gray-600 mb-2 max-w-xl">
           A type-safe project management system where a single Zod schema drives
-          validation, API documentation, and React Query hooks — with zero drift
+          validation, API documentation, and React Query hooks, with zero drift
           between layers.
         </p>
         <p className="text-sm text-gray-400 mb-8">
