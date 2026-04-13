@@ -1,9 +1,8 @@
 # Tech Debt
 
-## Monorepo Tooling
+## Monorepo Tooling ✅ Complete
 
-Currently `apps/api` and `apps/web` are standalone projects wired manually.
-The following should be added once the core is working end-to-end.
+All items below have been implemented. Kept for reference.
 
 ### pnpm Workspaces ✅ Done
 
