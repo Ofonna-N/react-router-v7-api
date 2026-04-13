@@ -58,9 +58,9 @@ export default function Home() {
           Catalyst
         </h1>
         <p className="text-lg text-gray-600 mb-2 max-w-xl">
-          A type-safe project management system where a single Zod schema
-          drives validation, API documentation, and React Query hooks —
-          with zero drift between layers.
+          A type-safe project management system where a single Zod schema drives
+          validation, API documentation, and React Query hooks — with zero drift
+          between layers.
         </p>
         <p className="text-sm text-gray-400 mb-8">
           Hono · Zod · OpenAPI · Orval · TanStack Query · React Router v7
@@ -92,7 +92,9 @@ export default function Home() {
               key={item.step}
               className="flex sm:flex-col items-center gap-2 flex-1"
             >
-              <div className={`flex-1 w-full rounded-lg border p-4 ${item.color}`}>
+              <div
+                className={`flex-1 w-full rounded-lg border p-4 ${item.color}`}
+              >
                 <div
                   className={`text-xs font-semibold px-2 py-0.5 rounded-full ${item.badge} inline-block mb-2`}
                 >
@@ -100,7 +102,9 @@ export default function Home() {
                 </div>
                 <p className="font-semibold text-sm">{item.label}</p>
                 <p className="text-xs opacity-75 mt-0.5">{item.description}</p>
-                <p className="text-xs font-mono opacity-60 mt-2">{item.detail}</p>
+                <p className="text-xs font-mono opacity-60 mt-2">
+                  {item.detail}
+                </p>
               </div>
               {i < pipeline.length - 1 && (
                 <>
